@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - node # uses most recent stable node version
+services:
+  - postgresql # starts up postgres
+addons:
+  postgresql: '9.6' # highest available postgres version on Travis
+dist: trusty # uses trusty environment
+sudo: false # when on trusty, uses Docker containers for speed
+notifications:
+  email:
+    on_success: change # default: change (only when going from broken to fixed)
+    on_failure: always # default: always (which is annoying, as it should be)
+install:
+  - npm ci # faster, goes only from package-lock
+before_script:
+  - psql -c 'create database "platypus-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+script:
+  - npm test # test the code
+  - npm run build-client # make the bundle
+
+before_deploy:
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: platypus # see README
+  api_key:
+    secure: 'uqqWGJgQJO0z7k01uPKVTQeFn1rD6zK8p+3ZZGlPTAAnQ+1H33OFh+QIN45jNo9v81UCflPXF0gXTl13GoVLZ1SWRJFMX98EWL5NU54mq3pj0qIeVm9IL4gKNnO5u9Lvi4VbYb+M0jPzd2HHoCdji14UyAokWXCxu3JJfBrMvzcqg9zL1EchRacUgAqCprm4FoxiZ5L8yAtj0X5sKX3DG+cbUjGinp8J8oaw7PvRF/Lal17T2Lgs0O/C5nnR/66iVPRcRPip5kdN5jvMiAmo0P7ISSDbarbO7yQ3vML+WUiHh3xgE2IptiCz1swfpqAQyeXInoDNXy7ZnwQs8ceDphgv5YAazq+eFTuIgNpqrbnqp5Pomxa+bt2L+boJx5HuJxElkjdjabVjRdvvru0oVKgoYWew0PGhHL2V6m56e+njrAu1aTjDQhbrDFSGPfAJcgd1A7fKDAD3PFenq03UmXyY8mZrd1gH0iShZw/RRux3XZ+i0njV+Z4oFDUFWMFWbdUn+S99Wiz8esjnMf79aCYn1iveJM9oOtWR0FbYkyJK395nNdNSIyFbiYAvhN5hA9O4NGyXgYT79aw3C5vqjDbdot4JNW8lXBrGK10/Il52FM1wT8ShaxGY2NfcASOClcHKpfMkpOV4oVL2Etq+e4qNwBTJPOAtflDlWAtCAvA=' # see README
