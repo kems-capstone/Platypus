@@ -1,5 +1,7 @@
 Social Contract
 
+IS THIS keith?
+
 Disagreements:
 
 Talk it over with the entire group a. worst case scenario, reach out to a fellow
