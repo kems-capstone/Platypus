@@ -2,6 +2,7 @@
 
 const db = require('../server/db');
 const {User, Playlist, Room} = require('../server/db/models');
+const songs = require('../songs');
 
 async function seed() {
   await db.sync({force: true});
@@ -107,6 +108,23 @@ async function seed() {
     Playlist.create({roomId: 3, songId: 111111, playOrder: 3, userId: 3})
   ]);
   console.log(`seeded ${playlists.length} playlists`);
+
+  for (let i = 0; i < songs.length; i++) {
+    let song = songs[i];
+    try {
+      await Music.create({
+        name: song.name,
+        audioUrl: song.audioUrl,
+        artist: song.artist,
+        album: song.album,
+        genre: song.genre,
+        artworkUrl: song.artworkUrl
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+  console.log(`seeded ${Music.length} songs`);
 }
 
 async function runSeed() {
