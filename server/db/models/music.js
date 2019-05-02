@@ -2,15 +2,8 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Music = db.define('music', {
-  songId: {
+  audioUrl: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
-  },
-  audio: {
-    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       notEmpty: true
@@ -32,10 +25,14 @@ const Music = db.define('music', {
     type: Sequelize.STRING,
     allowNull: true
   },
+  genre: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   artworkUrl: {
     type: Sequelize.STRING,
     allowNull: true
   }
 });
 
-module.exports = Playlist;
+module.exports = Music;

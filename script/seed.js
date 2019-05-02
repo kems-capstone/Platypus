@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('../server/db');
-const {User, Playlist, Room} = require('../server/db/models');
+const {User, Playlist, Room, Music} = require('../server/db/models');
 const songs = require('../songs');
 
 async function seed() {
@@ -124,7 +124,6 @@ async function seed() {
       console.error(error.message);
     }
   }
-  console.log(`seeded ${Music.length} songs`);
 }
 
 async function runSeed() {
