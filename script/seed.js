@@ -8,12 +8,64 @@ async function seed() {
   await db.sync({force: true});
   console.log('db synced!');
 
+  const rooms = await Promise.all([
+    //Previous room now closed
+    Room.create({
+      partyId: 1,
+      host: 4,
+      roomKey: 'AAAA',
+      guests: 1,
+      closed: true,
+      userId: 1
+    }),
+    Room.create({
+      partyId: 1,
+      host: 4,
+      roomKey: 'AAAA',
+      guests: 4,
+      closed: true
+    }),
+    //Open room 1
+    Room.create({
+      partyId: 2,
+      host: 1,
+      roomKey: 'BBBB',
+      guests: 1,
+      closed: false
+    }),
+    Room.create({
+      partyId: 2,
+      host: 1,
+      roomKey: 'BBBB',
+      guests: 2,
+      closed: false
+    }),
+    //Open Room 2
+    Room.create({
+      partyId: 3,
+      host: 3,
+      roomKey: 'CCCC',
+      guests: 3,
+      closed: false
+    }),
+    Room.create({
+      partyId: 3,
+      host: 3,
+      roomKey: 'CCCC',
+      guests: 4,
+      closed: false
+    })
+  ]);
+  console.log(`seeded ${rooms.length} rooms`);
+  console.log(`seeded successfully`);
+
   const users = await Promise.all([
     User.create({
       email: 'platy@email.com',
       password: '123',
       firstName: 'Patty',
-      lastName: 'Platypusowitz'
+      lastName: 'Platypusowitz',
+      roomId: 1
     }),
     User.create({
       email: 'Okapi@canopyForest.com',
@@ -43,76 +95,35 @@ async function seed() {
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
 
-  const rooms = await Promise.all([
-    //Previous room now closed
-    Room.create({
+  let builtPlaylist = await Promise.all([
+    Playlist.build({
       roomId: 1,
-      host: 4,
-      roomKey: 'AAAA',
-      Users: 1,
-      closed: true
+      songId: 111111,
+      playOrder: 1,
+      userId: 1
     }),
-    Room.create({
-      roomId: 1,
-      host: 4,
-      roomKey: 'AAAA',
-      Users: 4,
-      closed: true
-    }),
-    //Open room 1
-    Room.create({
-      roomId: 2,
-      host: 1,
-      roomKey: 'BBBB',
-      Users: 1,
-      closed: false
-    }),
-    Room.create({
-      roomId: 2,
-      host: 1,
-      roomKey: 'BBBB',
-      Users: 2,
-      closed: false
-    }),
-    //Open Room 2
-    Room.create({
-      roomId: 3,
-      host: 3,
-      roomKey: 'CCCC',
-      Users: 3,
-      closed: false
-    }),
-    Room.create({
-      roomId: 3,
-      host: 3,
-      roomKey: 'CCCC',
-      Users: 4,
-      closed: false
-    })
+    Playlist.build({roomId: 1, songId: 122222, playOrder: 2, userId: 1}),
+    Playlist.build({roomId: 1, songId: 133333, playOrder: 3, userId: 1}),
+    Playlist.build({roomId: 1, songId: 144444, playOrder: 4, userId: 4}),
+    Playlist.build({roomId: 2, songId: 155555, playOrder: 1, userId: 1}),
+    Playlist.build({roomId: 2, songId: 166666, playOrder: 2, userId: 1}),
+    Playlist.build({roomId: 2, songId: 177777, playOrder: 3, userId: 2}),
+    Playlist.build({roomId: 3, songId: 188888, playOrder: 1, userId: 3}),
+    Playlist.build({roomId: 3, songId: 166666, playOrder: 2, userId: 4}),
+    Playlist.build({roomId: 2, songId: 166666, playOrder: 4, userId: 2}),
+    Playlist.build({roomId: 2, songId: 177777, playOrder: 5, userId: 2}),
+    Playlist.build({roomId: 3, songId: 111111, playOrder: 3, userId: 3})
   ]);
-  console.log(`seeded ${rooms.length} rooms`);
-  console.log(`seeded successfully`);
+  for (let i = 0; i < builtPlaylist.length; i++) {
+    await builtPlaylist[i].save();
+  }
 
-  const playlists = await Promise.all([
-    Playlist.create({roomId: 1, songId: 111111, playOrder: 1, userId: 1}),
-    Playlist.create({roomId: 1, songId: 122222, playOrder: 2, userId: 1}),
-    Playlist.create({roomId: 1, songId: 133333, playOrder: 3, userId: 1}),
-    Playlist.create({roomId: 1, songId: 144444, playOrder: 4, userId: 4}),
-    Playlist.create({roomId: 2, songId: 155555, playOrder: 1, userId: 1}),
-    Playlist.create({roomId: 2, songId: 166666, playOrder: 2, userId: 1}),
-    Playlist.create({roomId: 2, songId: 177777, playOrder: 3, userId: 2}),
-    Playlist.create({roomId: 3, songId: 188888, playOrder: 1, userId: 3}),
-    Playlist.create({roomId: 3, songId: 166666, playOrder: 2, userId: 4}),
-    Playlist.create({roomId: 2, songId: 166666, playOrder: 4, userId: 2}),
-    Playlist.create({roomId: 2, songId: 177777, playOrder: 5, userId: 2}),
-    Playlist.create({roomId: 3, songId: 111111, playOrder: 3, userId: 3})
-  ]);
-  console.log(`seeded ${playlists.length} playlists`);
-
+  let builtMusic;
   for (let i = 0; i < songs.length; i++) {
     let song = songs[i];
+
     try {
-      await Music.create({
+      builtMusic = await Music.build({
         name: song.name,
         audioUrl: song.audioUrl,
         artist: song.artist,
@@ -123,6 +134,12 @@ async function seed() {
     } catch (error) {
       console.error(error.message);
     }
+
+    await builtMusic.save();
+    await builtMusic.addPlaylists(builtPlaylist);
+  }
+  for (let i = 0; i < builtMusic.length; i++) {
+    await builtPlaylist[i].addMusic(builtMusic);
   }
 }
 

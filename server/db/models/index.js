@@ -5,8 +5,8 @@ const Playlist = require('./playlist');
 const Room = require('./room');
 const Music = require('./music');
 
-User.belongsToMany(Room, {through: 'user_room'});
-Room.belongsToMany(Playlist, {through: 'user_room'});
+Room.hasMany(User);
+User.belongsTo(Room);
 
 Music.belongsToMany(Playlist, {through: 'playlist_music'});
 Playlist.belongsToMany(Music, {through: 'playlist_music'});
