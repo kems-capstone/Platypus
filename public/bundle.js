@@ -132,14 +132,7 @@ function (_Component) {
   _createClass(app, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Hey, this is the app"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
-        src: "https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3",
-        width: "300",
-        height: "380",
-        frameborder: "0",
-        allowtransparency: "true",
-        allow: "encrypted-media"
-      }));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Hey, this is the app"));
     }
   }]);
 
@@ -34614,7 +34607,7 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
