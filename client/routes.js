@@ -1,66 +1,27 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {withRouter, Route, Switch} from 'react-router-dom';
-import {Homepage, Login} from './components';
-import PropTypes from 'prop-types';
+import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Homepage from './components/Homepage';
+import Login from './components/Login';
+import {Dashboard} from './components/Dashboard';
 
-class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData();
-  }
-
-  render() {
-    const {isLoggedIn} = this.props;
-
-    return (
-      <Switch>
-        {/* Routes placed here are available to all visitors */}
-
-        <Route path="/login" component={Login} />
-        <Route path="/home" component={Homepage} />
-
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            {/* <Route path='/joinRoom' component={joinRoom} /> */}
-            {/* <Route path="/hostform" component={hostForm} /> */}
-          </Switch>
-        )}
-        {/* Displays our Login component as a fallback */}
-
-        <Route component={Homepage} />
-      </Switch>
-    );
-  }
-}
-
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
-    // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
-  };
+const Routes = () => {
+  return (
+    <BrowserRouter>
+      <div>
+        <Switch>
+          <Route exact path="/home" component={Homepage} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route
+            path="*"
+            render={() => {
+              return <h1>404, we cannot find what you are looking for!</h1>;
+            }}
+          />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
 };
 
-const mapDispatch = dispatch => {
-  return {
-    loadInitialData() {
-      dispatch(me());
-    }
-  };
-};
-
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Routes));
-
-/**
- * PROP TYPES
- */
-Routes.propTypes = {
-  loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-};
+export default Routes;

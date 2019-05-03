@@ -4,6 +4,7 @@ h1 {
 
 .homepage {
   text-align: center;
-  margin-top: 50px;
   background-image: url('./yvette-de-wit-118721-unsplash.jpg');
+  min-height: 100vh;
+  background-size: cover;
 }

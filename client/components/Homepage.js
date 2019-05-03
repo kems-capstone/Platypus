@@ -7,7 +7,7 @@ class Homepage extends Component {
 
   render() {
     return (
-      <div class="homepage">
+      <div className="homepage">
         <h1>Welcome to Platypus!</h1>
         <p>
           Platypus is a crowd-sourcing playlist app, that lets everyone be the
