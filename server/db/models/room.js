@@ -2,6 +2,15 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Room = db.define('room', {
+  partyId: {
+    type: Sequelize.INTEGER
+  },
+  guests: {
+    type: Sequelize.INTEGER
+  },
+  host: {
+    type: Sequelize.INTEGER
+  },
   roomKey: {
     type: Sequelize.STRING,
     allowNull: false,
