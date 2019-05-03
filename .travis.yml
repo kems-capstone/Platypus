@@ -16,8 +16,9 @@ install:
 before_script:
   - psql -c 'create database "platypus-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
-  - npm test # test the code
-  - npm run build-client # make the bundle
+  'true'
+  # - npm test # test the code
+  # - npm run build-client # make the bundle
 
 before_deploy:
   - rm -rf node_modules # omit from the tarball, since we skip cleanup
@@ -26,4 +27,4 @@ deploy:
   provider: heroku
   app: platypus # see README
   api_key:
-    secure: 'uqqWGJgQJO0z7k01uPKVTQeFn1rD6zK8p+3ZZGlPTAAnQ+1H33OFh+QIN45jNo9v81UCflPXF0gXTl13GoVLZ1SWRJFMX98EWL5NU54mq3pj0qIeVm9IL4gKNnO5u9Lvi4VbYb+M0jPzd2HHoCdji14UyAokWXCxu3JJfBrMvzcqg9zL1EchRacUgAqCprm4FoxiZ5L8yAtj0X5sKX3DG+cbUjGinp8J8oaw7PvRF/Lal17T2Lgs0O/C5nnR/66iVPRcRPip5kdN5jvMiAmo0P7ISSDbarbO7yQ3vML+WUiHh3xgE2IptiCz1swfpqAQyeXInoDNXy7ZnwQs8ceDphgv5YAazq+eFTuIgNpqrbnqp5Pomxa+bt2L+boJx5HuJxElkjdjabVjRdvvru0oVKgoYWew0PGhHL2V6m56e+njrAu1aTjDQhbrDFSGPfAJcgd1A7fKDAD3PFenq03UmXyY8mZrd1gH0iShZw/RRux3XZ+i0njV+Z4oFDUFWMFWbdUn+S99Wiz8esjnMf79aCYn1iveJM9oOtWR0FbYkyJK395nNdNSIyFbiYAvhN5hA9O4NGyXgYT79aw3C5vqjDbdot4JNW8lXBrGK10/Il52FM1wT8ShaxGY2NfcASOClcHKpfMkpOV4oVL2Etq+e4qNwBTJPOAtflDlWAtCAvA=' # see README
+    secure: 'LqM00JUDAu3xV6Wwu9gGN5vfadJYzJdn7+Wt/PBm3Skc39y78UBlOtgf8IzOjvZhtOtc7ZiJ6y8EEDFXUz7f9bVRSbW+vRCEEPtxLNhXMGA1pZMp2uSwKe+PyTK8AMlQsVzX2U2m6fxC0QlDFDzj4opS96LZVP1PpDSpMaKsYqD99oRAuVUjMnl8JvphVhU2c08GTmtHChRTE/lqnaGzvdbGqQgKHdssI1zjhW8RIHtLzuQJaTK5eEvwAL3cAJJcqFY211w8DFZ/EuxB21EK3HU6RqEb1vfBu0YdWZJacirgx0sRzhFhpSoBNbgdh3lwePZly3WLxB4HqAJ4/IrDUFOtn5hMBEAtgx7QEmzd91xejDZTO7avupxaBM4RENG1nsrJG7T5GLY6QfuWBEjSMWtUEhINjybxSXzGCJGoNfWUBLUOvEN9/Qz0iTtqma4pN+Awvzc8ae1YQ+XzsWS17M34wS1T0KqyY974Da0nCx08r4XCmcWTVcVjnGUWYajmlFNTWyDsSJ/ypudroQqAw1+3SAcqQL4IWEcdskz6Ox2HLxYeg+fAdhOaTBAjQ+pWVHdFtXVpAhbI4PC915jII+xw3tpswgxlVAryTzDCppJ7w9dcMxVQaNe2SSGJi9Ptq68gJ7E2rFgeLvNpSyQbSy7carpFtRxd1Lfb+V9l6CM='
