@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('../server/db');
-const {User, Playlist, Room, Music, Playlist_music} = require('../server/db/models');
+const {User, Playlist, Room, Music} = require('../server/db/models');
 const songs = require('../songs');
 
 async function seed() {
@@ -98,20 +98,21 @@ async function seed() {
   let builtPlaylist = await Promise.all([
     Playlist.build({
       roomId: 1,
+      songId: 111111,
       playOrder: 1,
       userId: 1
     }),
-    Playlist.build({roomId: 1, playOrder: 2, userId: 1}),
-    Playlist.build({roomId: 1, playOrder: 3, userId: 1}),
-    Playlist.build({roomId: 1, playOrder: 4, userId: 4}),
-    Playlist.build({roomId: 2,  playOrder: 1, userId: 1}),
-    Playlist.build({roomId: 2,  playOrder: 2, userId: 1}),
-    Playlist.build({roomId: 2,  playOrder: 3, userId: 2}),
-    Playlist.build({roomId: 3,  playOrder: 1, userId: 3}),
-    Playlist.build({roomId: 3,  playOrder: 2, userId: 4}),
-    Playlist.build({roomId: 2,  playOrder: 4, userId: 2}),
-    Playlist.build({roomId: 2,  playOrder: 5, userId: 2}),
-    Playlist.build({roomId: 3,  playOrder: 3, userId: 3})
+    Playlist.build({roomId: 1, songId: 122222, playOrder: 2, userId: 1}),
+    Playlist.build({roomId: 1, songId: 133333, playOrder: 3, userId: 1}),
+    Playlist.build({roomId: 1, songId: 144444, playOrder: 4, userId: 4}),
+    Playlist.build({roomId: 2, songId: 155555, playOrder: 1, userId: 1}),
+    Playlist.build({roomId: 2, songId: 166666, playOrder: 2, userId: 1}),
+    Playlist.build({roomId: 2, songId: 177777, playOrder: 3, userId: 2}),
+    Playlist.build({roomId: 3, songId: 188888, playOrder: 1, userId: 3}),
+    Playlist.build({roomId: 3, songId: 166666, playOrder: 2, userId: 4}),
+    Playlist.build({roomId: 2, songId: 166666, playOrder: 4, userId: 2}),
+    Playlist.build({roomId: 2, songId: 177777, playOrder: 5, userId: 2}),
+    Playlist.build({roomId: 3, songId: 111111, playOrder: 3, userId: 3})
   ]);
   for (let i = 0; i < builtPlaylist.length; i++) {
     await builtPlaylist[i].save();
@@ -134,27 +135,13 @@ async function seed() {
       console.error(error.message);
     }
 
-
-    // await builtMusic[1].setPlaylist(builtPlaylist[1])
-
-
-    // await builtMusic.save();
-    // for (let j = 0; j < builtMusic.length; j++) {
-    //   await builtPlaylist[j].setMusic(builtMusic[j]);
-    //   await builtMusic[j].setPlaylists(builtPlaylist[j]);
+    await builtMusic.save();
+    await builtMusic.addPlaylists(builtPlaylist);
   }
+  for (let i = 0; i < builtMusic.length; i++) {
+    await builtPlaylist[i].addMusic(builtMusic);
   }
-  // for (let i = 0; i < builtMusic.length; i++) {
-    //   await builtPlaylist[i].addMusic(builtMusic);
-    // }
-
-  // let counter = 0
-  // builtPlaylist.forEach(index => {
-  //   counter++
-  //   index.addMusic(builtMusic[counter])
-  // }
-
-
+}
 
 async function runSeed() {
   console.log('seeding...');
