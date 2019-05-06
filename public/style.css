@@ -8,3 +8,9 @@ h1 {
   min-height: 100vh;
   background-size: cover;
 }
+
+.music-box {
+  background-color: green;
+  height: 100px;
+  width: 250px;
+}
