@@ -1,17 +1,19 @@
 const router = require('express').Router();
 const Music = require('../db/models/music');
 const Playlist = require('../db/models/playlist');
+const Room = require('../db/models/room');
 
 router.get('/:id', async (req, res, next) => {
-  const playlist = await Playlist.findOne({
+  const playlist = await Room.findAll({
     where: {
-      roomId: req.params.id
-    }
+      playlistId: req.params.id
+    },
+    include: [{model: Playlist, include: {model: Music}}]
   });
-  let music = await playlist.getMusic();
+  // let music = await playlist.getMusic();
   console.log(playlist);
 
-  res.send(music);
+  res.send(playlist);
 });
 
 router.post('/:id', async (req, res, next) => {
