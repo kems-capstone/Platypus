@@ -138,8 +138,8 @@ async function seed() {
     await builtMusic.save();
     await builtMusic.addPlaylists(builtPlaylist);
   }
-  for (let i = 0; i < builtMusic.length; i++) {
-    await builtPlaylist[i].addMusic(builtMusic);
+  for (let k in builtPlaylist) {
+    await builtPlaylist[k].addMusic(builtMusic);
   }
 }
 
