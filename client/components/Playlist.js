@@ -59,7 +59,7 @@ class Playlist extends Component {
         <br />
         <br />
         <audio
-          src={this.state.selectedSong}
+          src={this.props.playlist.currentSong.audioUrl}
           onClick={this.playSong}
           controls
           id="audio"
