@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {logInThunk} from '../store/user';
 import {connect} from 'react-redux';
+import history from '../history';
 
 class AuthForm extends Component {
   constructor(props) {
     super(props);
+    console.log('Props in constructor', props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   async handleSubmit(event) {
@@ -12,7 +14,7 @@ class AuthForm extends Component {
     const email = event.target.email.value;
     const password = event.target.password.value;
     await this.props.logInThunk({email, password});
-    // history.push('/alltabs');
+    this.props.history.push('/dashboard');
   }
   render() {
     return (

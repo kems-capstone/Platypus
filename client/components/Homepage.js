@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import AuthForm from './AuthForm';
+import {connect} from 'react-redux';
 
 class Homepage extends Component {
   constructor(props) {
     super(props);
+    console.log('Props on homepage', props);
   }
 
   render() {
@@ -20,11 +22,11 @@ class Homepage extends Component {
           Create your own room or enter the secret room code to join one that is
           already playing.
         </p>
-        <AuthForm />
+        <AuthForm history={this.props.history} />
       </div>
       </div>
     );
   }
 }
 
-export default Homepage;
+export default connect(null, null)(Homepage);
