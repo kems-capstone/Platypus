@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AuthForm from './AuthForm';
 
 class Homepage extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class Homepage extends Component {
           Create your own room or enter the secret room code to join one that is
           already playing.
         </p>
+        <AuthForm />
       </div>
     );
   }
