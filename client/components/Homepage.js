@@ -10,7 +10,9 @@ class Homepage extends Component {
 
   render() {
     return (
-      <div className="homepage">
+      <div className="homepage" id='homepageBackgrouund'>
+      <div className='homepageText'>
+
         <h1>Welcome to Platypus!</h1>
         <p>
           Platypus is a crowd-sourcing playlist app, that lets everyone be the
@@ -21,6 +23,7 @@ class Homepage extends Component {
           already playing.
         </p>
         <AuthForm history={this.props.history} />
+      </div>
       </div>
     );
   }
