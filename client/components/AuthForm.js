@@ -7,11 +7,12 @@ class AuthForm extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    this.props.logInThunk({email, password});
+    await this.props.logInThunk({email, password});
+    // history.push('/alltabs');
   }
   render() {
     return (
@@ -32,10 +33,16 @@ class AuthForm extends Component {
               <input name="password" type="password" />
             </div>
             <div>
-              <button type="submit">Login/Singup</button>
+              <button type="submit">Login/Sign up</button>
             </div>
           </form>
         </div>
+        {this.props.user.id ? (
+          <p>There is a user</p>
+        ) : (
+          <p>There is NOT a user</p>
+        )}
+        {console.log(this.props)}
       </div>
     );
   }
@@ -47,7 +54,13 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(AuthForm);
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
 
 // import React from 'react';
 // import {connect} from 'react-redux';
