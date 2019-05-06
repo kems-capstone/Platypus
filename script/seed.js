@@ -135,7 +135,7 @@ async function seed() {
     }
 
 
-    await builtMusic[1].setPlaylist(builtPlaylist[1])
+    // await builtMusic[1].setPlaylist(builtPlaylist[1])
 
 
     // await builtMusic.save();
