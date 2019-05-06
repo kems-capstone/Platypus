@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Howl from 'howler';
 import Player from './Player';
 
 const audio = document.createElement('audio');
@@ -20,15 +19,13 @@ export default class Playlist extends Component {
     console.log(this.state)
   }
 
-  playSong(url, songId) {
+  playSong() {
     //Stop any currently playing song
     audio.pause();
 
     //Play newly selected song
     audio.src = this.state.selectedSong;
-    this.setState({
-      playing: true
-    });
+    this.setState(prevState => ({playing: !prevState.playing}));
     audio.load();
     audio.play();
   }
