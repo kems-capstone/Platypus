@@ -21,10 +21,6 @@ const Music = db.define('music', {
     type: Sequelize.STRING,
     allowNull: true
   },
-  playtime: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
   genre: {
     type: Sequelize.STRING,
     allowNull: true
