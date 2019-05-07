@@ -11,7 +11,7 @@ const User = require('./db/models/user');
 const app = express();
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const sessionStore = new SequelizeStore({ db });
+const sessionStore = new SequelizeStore({db});
 
 const socketio = require('socket.io');
 module.exports = app;
@@ -19,7 +19,7 @@ module.exports = app;
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/api', require('./api'));
 
@@ -38,7 +38,7 @@ const createApp = () => {
   app.use(morgan('dev'));
 
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({extended: true}));
 
   app.use(compression());
 
@@ -89,7 +89,7 @@ const startListening = () => {
   require('./socket')(io);
 };
 
-const syncDb = () => db.sync();
+const syncDb = () => db.sync({force: true});
 
 async function bootApp() {
   await sessionStore.sync();

@@ -1,22 +1,21 @@
 //Central Export for models
 
 const User = require('./user');
-const Playlist = require('./playlist');
 const Room = require('./room');
 const Music = require('./music');
+const User_Rooms = require('./user_rooms');
+const Room_Music = require('./room_music');
 
-Room.hasMany(User);
-User.belongsTo(Room);
+Room.belongsToMany(User, {through: User_Rooms});
+User.belongsToMany(Room, {through: User_Rooms});
 
-Music.belongsToMany(Playlist, {through: 'playlist_music'});
-Playlist.belongsToMany(Music, {through: 'playlist_music'});
-
-Playlist.hasOne(Room);
-Room.belongsTo(Playlist);
+Music.belongsToMany(Room, {through: Room_Music});
+Room.belongsToMany(Music, {through: Room_Music});
 
 module.exports = {
   User,
   Room,
-  Playlist,
-  Music
+  Music,
+  User_Rooms,
+  Room_Music
 };
